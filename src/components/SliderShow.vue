@@ -1,20 +1,26 @@
 <template>
-  <div class="">
-    <b-container>
-      <b-row class="slider pt-4">
+  <div class="d-flex align-items-center justify-content-center min-vh-100">
+    <b-container class="slider">
+      <b-row class="pt-4">
         <b-col
           cols="12"
           lg="5"
           md="5"
           class="d-flex align-items-start flex-column"
         >
-          <div class="content-top fadeInDown mb-auto p-2">
+          <div
+            class="content-top mb-auto p-2"
+            v-bind:class="{ fadeInDown: isActive }"
+          >
             <h6>CLOSCA BOTTELE</h6>
             <p class="display-3">Savanna</p>
             <p class="display-6">$39.90</p>
           </div>
 
-          <div class="content-bottem fadeInDown p-2">
+          <div
+            class="content-bottem p-2"
+            v-bind:class="{ fadeInDown: isActive }"
+          >
             <p>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse
               temporibus sapiente error perspiciatis ducimus quos, qui ea vel
@@ -30,8 +36,16 @@
         <b-col cols="12" lg="3" md="3">
           <div class="wrapper-main-img d-flex justify-content-center">
             <div class="background-main-image"></div>
-            <img class="main-img fade-in" src="../assets/slide-flusk-1.png" />
-            <img class="main-img fade-out" src="../assets/slide-flusk-2.png" />
+            <img
+              class="main-img"
+              v-bind:class="{ fadeIn: isActive }"
+              src="../assets/slide-flusk-1.png"
+            />
+            <img
+              class="main-img fadeOut"
+              v-bind:class="{ fadeOut: isActive }"
+              src="../assets/slide-flusk-2.png"
+            />
           </div>
         </b-col>
         <b-col
@@ -41,30 +55,40 @@
           class="d-flex align-items-end flex-column p-0"
         >
           <div class="slidesNum me-3">
-            <span class="current-slide fadeInDown">01</span>
-            <span class="fadeOutDown">02</span>
+            <span class="current-slide" v-bind:class="{ fadeInDown: isActive }"
+              >01</span
+            >
+            <span class="fadeOutDown" v-bind:class="{ fadeOutDown: isActive }"
+              >02</span
+            >
             <span>/04</span>
           </div>
           <div class="wrapper-next-img my-5 d-flex align-items-center">
-            <img class="next-img fade-in" src="../assets/slide-flusk-2.png" />
-            <img class="next-img fade-out" src="../assets/slide-flusk-1.png" />
+            <img
+              class="next-img"
+              v-bind:class="{ fadeIn: isActive }"
+              src="../assets/slide-flusk-2.png"
+            />
+            <img
+              class="next-img"
+              v-bind:class="{ fadeOut: isActive }"
+              src="../assets/slide-flusk-1.png"
+            />
           </div>
           <div class="navigation-btn mt-5 me-3">
-            <!-- <b-icon
-              icon="arrow-left-circle"
-              class="prev-btn"
-              variant="secondary"
-              aria-label="Prev"
-            ></b-icon> -->
             <b-button
+              @click="hasAnimat"
+              v-bind:class="{ fillColor: isActive }"
               variant="outline-secondary"
-              class="prev-button fill-color rounded-circle p-3 m-2"
+              class="prev-button rounded-circle p-3 m-2"
             >
               <b-icon-arrow-left variant="secondary"></b-icon-arrow-left
             ></b-button>
             <b-button
+              @click="hasAnimat"
+              v-bind:class="{ fillColor: isActive }"
               variant="outline-secondary"
-              class="next-button fill-color rounded-circle p-3 m-2"
+              class="next-button rounded-circle p-3 m-2"
             >
               <b-icon-arrow-right variant="secondary"></b-icon-arrow-right
             ></b-button>
@@ -81,14 +105,27 @@ export default {
   props: {
     msg: String,
   },
+  data() {
+    return { isActive: true };
+  },
+  methods: {
+    hasAnimat: function () {
+      this.isActive = false;
+      setTimeout(() => {
+        this.isActive = true;
+      }, 6000);
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .slider {
-  animation: changeColor 3s infinite;
-  animation-direction: alternate;
+  /* animation: changeColor 3s infinite;
+  animation-direction: alternate; */
+  background-color: #e9c08c;
+  margin: auto;
 }
 .wrapper-main-img {
   position: relative;
@@ -98,7 +135,6 @@ export default {
   position: absolute;
   top: 15%;
   width: 60%;
-  /* transition: all 0.5s ease; */
 }
 .background-main-image {
   height: 400px;
@@ -128,7 +164,7 @@ export default {
 }
 
 .fadeInDown {
-  animation: fadeInDown 3s infinite;
+  animation: fadeInDown 4s infinite;
 }
 @keyframes fadeInDown {
   0%,
@@ -136,13 +172,14 @@ export default {
     opacity: 0;
     -webkit-transform: translateY(-20px);
   }
+  25%,
   50% {
     opacity: 1;
     -webkit-transform: translateY(0);
   }
 }
 .fadeOutDown {
-  animation: fadeOutDown 3s infinite;
+  animation: fadeOutDown 4s infinite;
 }
 @keyframes fadeOutDown {
   0%,
@@ -150,39 +187,41 @@ export default {
     opacity: 1;
     -webkit-transform: translateY(0px);
   }
+  25%,
   50% {
     opacity: 0;
     -webkit-transform: translateY(20px);
   }
 }
-.fade-in {
-  animation-name: fade-in;
-  animation-duration: 3s;
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 6s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
-.fade-out {
-  animation-name: fade-out;
-  animation-duration: 3s;
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 6s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
 
-@keyframes fade-in {
-  from {
+@keyframes fadeIn {
+  0% {
     opacity: 0;
     width: 50%;
   }
-
-  to {
+  30%,
+  100% {
     opacity: 1;
   }
 }
-@keyframes fade-out {
-  from {
+@keyframes fadeOut {
+  0%,
+  30% {
     opacity: 1;
   }
-  to {
+  100% {
     opacity: 0;
     width: 50%;
   }
@@ -201,28 +240,26 @@ export default {
   background-size: 200% 100%;
   background-position: left top;
 }
+.prev-button:hover,
+.next-button:hover {
+  background-color: #1f1e21 !important;
+}
 .prev-button {
   animation-delay: 3s;
 }
-.fill-color {
-  animation-name: fill-color;
+.fillColor {
+  animation-name: fillColor;
   animation-duration: 6s;
   animation-iteration-count: infinite;
 }
-@keyframes fill-color {
+
+@keyframes fillColor {
   0%,
   100% {
     background-color: transparent;
-    /* background: linear-gradient(to left, grey 50%, transparent 50%);
-    background-size: 200% 100%;
-    background-position: bottom left;
-  */
   }
 
   50% {
-    /* background-color: gray; */
-    /* text-color: #ffffff'; */
-    /* background-position: bottom right; */
     background-position: right top;
   }
 }
